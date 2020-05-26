@@ -22,7 +22,7 @@ How to get started
 Examples
 --------
 
-Ingest a folder containing evtx files into `winevt-ir19-4242` indice:
+Ingest a folder containing evtx files into `winevt-lab42` indice:
 ```
 .\ingest_logs.ps1 -path "D:\Some Path\Logs\" -es_ip 192.168.42.42 -es_index winevt-lab42 -case TEST-42 -es_password MySuperStrongPasssword
 ```
