@@ -3,18 +3,9 @@ Collection of scripts &amp; modules for winlogbeat - EVTX parsing to ELK
 
 Elasticsearch Configuration
 --------
-Everything works fine by default however it is recommended to update the following:
-1. Create the index template
+Everything works fine by default however it is recommended to update the following index template:
 ```
 curl -X PUT "http://localhost:9200/_template/winevt?pretty" -H 'Content-Type: application/json' -uelastic -d@winevt.template
-```
-
-
-```
-TODO index template
-ES conf
-fields limit....
-Kibana setup / utc
 ```
 
 How to get started
