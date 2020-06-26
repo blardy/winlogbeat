@@ -34,7 +34,7 @@ var security = (function () {
             {from: "winlog.event_data.IpPort", to: "source.port", type: "long"},
             {from: "winlog.event_data.WorkstationName", to: "source.domain"},
         ],
-        mode: "copy",
+        mode: "rename",
         ignore_missing: true,
         fail_on_error: false,
     });
