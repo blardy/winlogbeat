@@ -53,76 +53,40 @@ Get-ChildItem -Recurse -Path $path -Filter *.evtx | % {
 if ( $es_ca -eq "Path/To/Your/Certificate-Auth-HERE" ) 
 {
 @"
-
 winlogbeat.shutdown_timeout: 30s
 winlogbeat.registry_file: $registry_file
 name: "IRIS ingest ps1"
-#max_procs: 8
-#==================== Elasticsearch template settings ==========================
+max_procs: 12
 
 setup.template.name: "winevt"
 setup.template.pattern: "winevt-*"
 setup.ilm.enabled: false
 
-setup.template.settings:
-  index.number_of_shards: 1
-  index.number_of_replicas: 0
-
-setup.kibana:
-  host: `http://$($es_ip):5601"
-
-#================================ Outputs =====================================
-
-#-------------------------- Elasticsearch output ------------------------------
-# Change that if perf issue
-queue.mem:
-  events: 190000
-  flush.min_events: 16384
-  flush.timeout: 0s
-  bulk_max_size: 4096
-
 output.elasticsearch:
   hosts: [`"$($es_ip):9200`"]
   username: `"$($es_user)`"
   password: `"$($es_password)`"
-output.elasticsearch.index: "$es_index"
+  index: "$es_index"
+  worker: 8
 "@ | Out-File -Append -FilePath $conf_file.FullName
 } else {
 @"
-
 winlogbeat.shutdown_timeout: 30s
 winlogbeat.registry_file: $registry_file
 name: "IRIS ingest ps1"
-#max_procs: 8
-#==================== Elasticsearch template settings ==========================
+max_procs: 12
 
 setup.template.name: "winevt"
 setup.template.pattern: "winevt-*"
 setup.ilm.enabled: false
 
-setup.template.settings:
-  index.number_of_shards: 1
-  index.number_of_replicas: 0
-
-setup.kibana:
-  host: `http://$($es_ip):5601"
-
-#================================ Outputs =====================================
-
-#-------------------------- Elasticsearch output ------------------------------
-# Change that if perf issue
-queue.mem:
-  events: 190000
-  flush.min_events: 16384
-  flush.timeout: 0s
-  bulk_max_size: 4096
-
 output.elasticsearch:
   hosts: [`"$($es_ip):9200`"]
   username: `"$($es_user)`"
   password: `"$($es_password)`"
+  index: "$es_index"
   ssl.certificate_authorities: [`"$($es_ca)`"]
-output.elasticsearch.index: "$es_index"
+  worker: 8
 "@ | Out-File -Append -FilePath $conf_file.FullName
 }
 
